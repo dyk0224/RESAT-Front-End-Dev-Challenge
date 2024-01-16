@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>timer</title>
+  <link href="main.css" rel="stylesheet">
+</head>
+<body>
+
+    <div class="frameMain">
+        <div class="frameClock">
+            <input id="hours" type=number class="clockInput" min="00" max="99" value="00"/>
+            <div class="clockColon">:</div>
+            <input id="minutes" type=number class="clockInput" min="00" max="59" value="00"/>
+            <div class="clockColon">:</div>
+            <input id="seconds" type=number class="clockInput" min="00" max="59" value="00"/>
+        </div>
+        
+        <div class="frameButton">
+            <div class="btn btnMargin" onclick="startTimer()">START</div>
+            <div class="btn btnMargin" onclick="stopTimer()">STOP</div>
+            <div class="btn btnMargin" onclick="resetTimer()">RESET</div>
+        </div>
+        <div id="notice" class="notice">타이머를 실행해 주세요.</div>
+    </div>
+
+    <script>
+        let intervalKey = [];
+        let hoursInput = document.getElementById('hours');
+        let minutesInput = document.getElementById('minutes');
+        let secondsInput = document.getElementById('seconds');
+        let noticeDisplay = document.getElementById('notice');
+        let caseNotice = 0;
+    
+        function startTimer() {
+            const time = getTime();
+    
+            const totalSeconds = time[0] * 3600 + time[1] * 60 + time[2];
+    
+            if (totalSeconds <= 0 || isNaN(totalSeconds)) {
+                alert('올바른 시간을 입력하세요.');
+                return;
+            }
+
+            intervalKey.push(setInterval(updateTimer, 1000));
+            intervalKey.push(setInterval(setNotice, 500));
+        }
+    
+        function updateTimer(totalSeconds) {
+            const time = getTime();
+
+            const remainingSeconds = parseInt(time[0] * 3600 + time[1] * 60 + time[2] - 1);
+    
+            const hours = Math.floor(remainingSeconds / 3600);
+            const minutes = Math.floor((remainingSeconds % 3600) / 60);
+            const seconds = remainingSeconds % 60;
+    
+            hoursInput.value = String(hours).padStart(2, '0');
+            minutesInput.value = String(minutes).padStart(2, '0');
+            secondsInput.value = String(seconds).padStart(2, '0');
+
+            if (remainingSeconds <= 0) {
+                resetTimer();
+                noticeDisplay.textContent = '일어나셈';
+                return;
+            }
+        }
+    
+        function stopTimer() {
+            intervalInit();
+            noticeDisplay.textContent = '타이머를 종료했습니다.';
+        }
+    
+        function resetTimer() {
+            intervalInit();
+    
+            // 입력 필드 초기화
+            hoursInput.value = '00';
+            minutesInput.value = '00';
+            secondsInput.value = '00';
+            noticeDisplay.textContent = '타이머를 실행해 주세요.';
+        }
+
+        function setNotice() {
+            const start = '타이머가 작동중입니다...';
+            const arrText = [`◁${start}▶`, `◀${start}▷`];
+
+            noticeDisplay.textContent = arrText[caseNotice];
+            caseNotice = ++caseNotice % 2;
+        }
+
+        function intervalInit() {
+            for (let i of intervalKey) {
+                clearInterval(i);
+            }
+            intervalKey = [];
+        }
+
+        function getTime() {
+            let arrTime = [];
+            arrTime.push(parseInt(hoursInput.value));
+            arrTime.push(parseInt(minutesInput.value));
+            arrTime.push(parseInt(secondsInput.value));
+
+            return arrTime;
+        }
+      </script>
+</body>
+</html>
