@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo List</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #todoContainer {
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        #todoForm {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        #taskInput {
+            flex-grow: 1;
+            padding: 8px;
+            width: 200px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
+        }
+
+        #prioritySelect {
+            padding: 8px;
+        }
+
+        button {
+            padding: 8px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .filters {
+            margin-top: 20px;
+        }
+
+        .filters input {
+            margin-right: 5px;
+        }
+
+        #todoList {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .task {
+            background-color: #f0f0f0;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .priority {
+            font-weight: bold;
+            margin-right: 10px;
+            line-height: 33px;
+        }
+
+        .completed {
+            text-decoration: line-through;
+            color: #888;
+        }
+
+        .task-buttons {
+            display: flex;
+        }
+
+        .task-buttons button {
+            margin-left: 5px;
+        }
+        
+        .btnInsert {
+            margin-left: 10px;
+        }
+        
+        .divList {
+            display: flex;
+        }
+        
+        .btnInList {
+            margin-left: px;
+        }
+        
+        .spanInList {
+            width: 215px;
+            line-height: 33px;
+        }
+        .btnListArea {
+            margin-right: auto;
+            
+        }
+    </style>
+</head>
+<body>
+
+    <div id="todoContainer">
+        <h1>ToDo List</h1>
+        
+        <div id="todoForm">
+            <input type="text" id="taskInput" placeholder="할 일을 입력하세요">
+            <select id="prioritySelect">
+                <option value="낮음">낮음</option>
+                <option value="보통">보통</option>
+                <option value="높음">높음</option>
+                <option value="아주 높음">아주 높음</option>
+            </select>
+            <button class="btnInsert" onclick="addTask()">등록</button>
+        </div>
+
+        <div class="filters">
+            <label>Show: </label>
+            <input type="radio" name="filter" value="all" checked onclick="filterTasks('all')">전체
+            <input type="radio" name="filter" value="completed" onclick="filterTasks('completed')">해결
+            <input type="radio" name="filter" value="uncompleted" onclick="filterTasks('uncompleted')">미해결
+        </div>
+
+        <ul id="todoList"></ul>
+    </div>
+
+    <script>
+        function addTask() {
+            let taskInput = document.getElementById("taskInput");
+            let prioritySelect = document.getElementById("prioritySelect");
+            let todoList = document.getElementById("todoList");
+
+            let taskText = taskInput.value;
+            let priority = prioritySelect.value;
+
+            if (taskText.trim() === "") {
+                alert("할 일을 입력하세요.");
+                return;
+            }
+
+            let taskElement = document.createElement("li");
+            taskElement.className = "task";
+            taskElement.innerHTML = `<div id="divList" class="divList">
+                                         <input type="checkbox" onchange="toggleTaskStatus(this)"> 
+                                         <span class="priority">${priority}</span>
+                                         <span class="spanInList">${taskText}</span>
+                                         <span class="btnListArea">
+                                             <button class="btnInList" onclick="editTask(this)">수정</button>
+                                             <button class="btnInList" onclick="removeTask(this)">삭제</button>
+                                         </span>
+                                     </div>`;
+            
+            todoList.appendChild(taskElement);
+            taskInput.value = "";
+
+            filterTasks("all");
+        }
+
+        function editTask(button) {
+            let taskElement = button.parentNode.parentNode.parentNode;
+            let taskTextElement = taskElement.querySelector("span:not(.priority)");
+            let newTaskText = prompt("수정할 내용을 입력하세요", taskTextElement.textContent);
+
+            if (newTaskText !== null) {
+                taskTextElement.textContent = newTaskText;
+                filterTasks("all");
+            }
+        }
+
+        function removeTask(button) {
+            let taskElement = button.parentNode.parentNode.parentNode;
+            taskElement.remove();
+        }
+
+        function toggleTaskStatus(checkbox) {
+            let taskElement = checkbox.parentNode;
+            taskElement.classList.toggle("completed", checkbox.checked);
+            filterTasks("all");
+        }
+
+        function filterTasks(filter) {
+            let todoList = document.getElementById("todoList");
+            let tasks = todoList.getElementsByClassName("task");
+            let divList = todoList.getElementsByClassName("divList");
+
+            for (let i=0; i<tasks.length; i++) {
+
+                switch (filter) {
+                    case "completed":
+                        tasks[i].style.display = divList[i].classList.contains("completed") ? "block" : "none";
+                        break;
+                    case "uncompleted":
+                        tasks[i].style.display = !divList[i].classList.contains("completed") ? "block" : "none";
+                        break;
+                    default:
+                        tasks[i].style.display = "block";
+                        break;
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>
