@@ -1,0 +1,226 @@
+div {
+    box-sizing: border-box;
+    border: 1px solid black;
+}
+.header {
+    width: 100%;
+    min-width: 1100px;
+    height: 60px;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    flex-wrap : wrap;
+}
+
+.header-left {
+    width: 60%;
+    height: 60px;
+    display: flex;
+    margin: auto;
+}
+
+.header-left-btn-list {
+    width: 650px;
+    height: 60px;
+    display: flex;
+    margin: auto;
+}
+
+.header-logo {
+    width: 150px;
+    height: 60px;
+    display: flex;
+    margin: auto;
+}
+
+.header-right {
+    width: 40%;
+    height: 60px;
+    display: flex;
+    margin: auto;
+}
+
+.header-right-btn-list {
+    width: 400px;
+    height: 60px;
+    display: flex;
+    margin: auto;
+}
+
+.header-btn {
+    width: 100px;
+    height: 60px;
+    margin: auto;
+    color: #bcb;
+    line-height: 60px;
+    text-align: center;
+}
+
+.area-top {
+    width: 60%;
+    min-width: 1100px;
+    height: 400px;
+    display: flex;
+    margin: auto;
+    flex-wrap : wrap;    
+}
+
+.block {
+    width: 100%;
+    flex-wrap : wrap;
+}
+
+.area-top-left {
+    width: 60%;
+    height: 400px;
+    margin: auto;
+    background: #332521;
+    color: snow;
+    font-size: 48px;
+}
+
+.area-top-right {
+    width: 40%;
+    height: 400px;
+    margin: auto;
+    background: #ddf2ff;
+    font-size: 48px;
+}
+
+.blue {
+    color: #7af;
+}
+
+.area-header {
+    width: 60%;
+    min-width: 1100px;
+    height: 70px;
+    display: flex;
+    margin: auto;
+    flex-wrap : wrap;    
+    text-align: left;
+}
+
+.area1 {
+    width: 60%;
+    min-width: 1100px;
+    height: 640px;
+    display: flex;
+    margin: auto;
+    flex-wrap : wrap;    
+}
+
+.area1-title {
+    width: 100%;
+    height: 40px;
+    flex-wrap : wrap;   
+    margin: auto; 
+}
+
+.area1-text {
+    width: 60%;
+    height: 30px;
+    flex-wrap : wrap;   
+    margin: auto; 
+}
+
+.area1-plus {
+    width: 40%;
+    height: 30px;
+    flex-wrap : wrap;   
+    margin: auto; 
+    text-align: right;
+}
+
+.area1-content {
+    width: 25%;
+    height: 300px;
+}
+
+.area1-content-image {
+    width: 95%;
+    height: 60%;
+    margin-left: 2.5%;
+}
+
+.area1-content-tag {
+    width: 95%;
+    height: 10%;
+    margin-left: 2.5%;
+    display: flex;
+}
+
+.area1-content-tag-day {
+    margin-left: 2.5%;
+    width: 20%;
+    height: 100%;
+    border-radius: 20%;
+    background: #444444;
+    color: snow;
+    text-align: center;
+    line-height: 24px;
+}
+
+.area1-content-tag-sub {
+    margin-left: 2.5%;
+    width: 75%;
+    height: 100%;
+    color: #777777;
+    line-height: 24px;
+    
+}
+
+.area1-content-title {
+    margin-left: 2.5%;
+    width: 95%;
+    height: 30%;
+    
+}
+
+.area2 {
+    width: 60%;
+    min-width: 1100px;
+    height: 150px;
+    display: flex;
+    margin: auto;
+    flex-wrap : wrap;  
+    background: #111133;
+}
+
+.area2-content1 {
+    margin-left: 10%;
+    width: 60%;
+    color: snow;
+    line-height: 150px;
+}
+
+.area2-content2 {
+    margin-left: 10%;
+    margin-top: 37.5px;
+    width: 20%;
+    height: 50%;
+    line-height: 75px;
+    color: snow;
+    background-color: #aaa; opacity : 0.5;
+    border-radius: 30%;
+    text-align: center;
+    
+}
+
+.area3 {    
+    width: 60%;
+    min-width: 1100px;
+    height: 320px;
+    display: flex;
+    margin: auto;
+    flex-wrap : wrap;    
+}
+
+.area4 {    
+    width: 60%;
+    min-width: 1100px;
+    height: 320px;
+    display: flex;
+    margin: auto;
+    flex-wrap : wrap; 
+}
