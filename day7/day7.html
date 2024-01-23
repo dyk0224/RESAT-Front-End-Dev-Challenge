@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이미지 슬라이드 애니메이션</title>
+    <style>
+        #slider-container {
+            width: 600px;
+            margin: auto;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #slider {
+            width: 800px;
+            height: 200px;
+        }
+
+        .slide {
+            width: 200px;
+            height: 200px;
+            box-sizing: border-box;
+            float: left;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+        }
+
+        #prevBtn, #nextBtn {
+            cursor: pointer;
+            position: absolute;
+            top: 35%;
+            font-size: 40px;
+            line-height: 40px;
+            color: #333;
+            -webkit-text-stroke: 1px white;
+            text-shadow: -1px 0px black, 0px 1px black, 1px 0px black, 0px -1px black;
+            padding: 10px;
+            z-index: 1;
+        }
+
+        #prevBtn { left: 10px; }
+        #nextBtn { right: 10px; }
+    </style>
+</head>
+<body>
+    <div id="slider-container">
+        <div id="slider">
+            <div class="slide"><img src="image0.jpg" alt="Image 0"></div>
+            <div class="slide"><img src="image1.jpg" alt="Image 1"></div>
+            <div class="slide"><img src="image2.jpg" alt="Image 2"></div>
+        </div>
+        <div id="prevBtn" onclick="showSlide('prev')">&#10094;</div>
+        <div id="nextBtn" onclick="showSlide('next')">&#10095;</div>
+    </div>
+
+    <script>
+        const slider = document.getElementById('slider');
+        const totalSlides = 5;
+        const slideWidth = -200;
+        let currentIndex = 1;
+        let isTransitioning = false; //슬라이드 애니메이션 실행중에 이벤트 발생 제한
+        let intervalKey = '';
+        intervalKey = setAutoSlide();
+                
+        function setAutoSlide() {
+            clearInterval(intervalKey);
+            
+            const key = setInterval(() => {
+                showSlide('next');
+            }, 2000);  
+            
+            return key;
+        }
+        
+        //슬라이드
+        async function showSlide(arrow) {
+            if (isTransitioning) {
+                return;
+            }
+            
+            isTransitioning = true;
+            intervalKey = setAutoSlide();
+            
+            const transformValue = arrow == 'next' ? [0, slideWidth] : [slideWidth, 0];
+            const indexValue = arrow == 'next' ? 1 : -1;
+            const insertType = arrow == 'next' ? 'append' : 'prepend';
+            const removeType = arrow == 'next' ? 'firstElementChild' : 'lastElementChild';
+            
+            currentIndex = indexCalc(indexValue);            
+            transSlider(transformValue[0], '');
+            
+            await new Promise((resolve, reject) => setTimeout(resolve, 0.1));
+            
+            addSlide(indexCalc(indexValue), insertType);
+            transSlider(transformValue[1], 'slide');
+
+            setTimeout(() => {
+                const sliderNode = document.getElementById("slider");                
+                sliderNode.removeChild(sliderNode[removeType]);
+                transSlider(0, '');
+
+                isTransitioning = false;
+            }, 500);
+            
+            return;
+        }
+
+        function addSlide(index, insertType) {
+            const newSlide = document.createElement('div');
+            newSlide.className = 'slide';
+            newSlide.innerHTML = `<img src="image${index}.jpg" alt="Image ${index}">`;
+            
+            slider[insertType](newSlide);
+            
+            return;
+        }
+        
+        function transSlider(value, type) {
+            let transType = ''
+            
+            switch (type) {
+                case 'slide':
+                    transType = 'transform 0.5s ease-in-out';
+                    break;
+            }
+            
+            slider.style.transition = transType;
+            slider.style.transform = `translateX(${value}px)`;
+            
+            return;
+        }
+        
+        function indexCalc(indexValue) {
+            return (currentIndex + totalSlides + indexValue) % totalSlides;
+        }
+    </script>
+</body>
+</html>
