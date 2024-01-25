@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Navigation Bar</title>
+  <style>
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    position: relative;
+    height: 100vh;
+}
+
+.header {
+    background-color: #333;
+    color: white;
+    text-align: center;
+      height: 60px;
+}
+
+.hamburger-btn {
+    font-size: 18px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+#sidebar {
+    position: absolute;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    display: none;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar li {
+    text-align: center;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    background-color: #555;
+}
+
+.content {
+    margin-left: 0;
+    transition: margin-left 0.5s;
+}
+nav {
+      background-color: #333;
+      text-align: center;
+      height: 60px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      display: inline-block;
+      line-height: 60px;
+    }
+
+    #menu-icon {
+      display: none;
+      cursor: pointer;
+      line-height: 60px;
+    }
+
+    #menu {
+      display: none;
+      text-align: left;
+    }
+
+    @media only screen and (max-width: 600px) {
+      nav a {
+        display: none;
+      }
+
+      #menu-icon {
+        display: block;
+      }
+
+      #menu {
+        display: block;
+      }
+
+      #sidebar {
+        display: block;
+      }
+      .content {
+          margin-left: 0;
+      }
+    }
+
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <nav>
+      <button id="menu-icon" class="hamburger-btn" onclick="toggleSidebar()">☰</button>
+      <a href="#" id="home">Home</a>
+      <a href="#" id="about">About</a>
+      <a href="#" id="contact">Contact</a>
+      <a href="#" id="faq">FAQ</a>
+      <div class="sidebar" id="sidebar">
+          <!-- 사이드바의 내용 -->
+          <ul>
+              <li><a href="#">Home</a></li>
+              <li><a href="#">About</a></li>
+              <li><a href="#">Contact</a></li>
+              <li><a href="#">FAQ</a></li>
+          </ul>
+      </div>
+    </nav>
+    <div class="content">
+        <!-- 웹 페이지의 본문 내용 -->
+        <h1>RESAT</h1>
+        <p>프론트엔드 챌린지 마지막날 (아님)</p>
+    </div>
+</div>
+
+<script>
+  const sidebar = document.getElementById("sidebar");
+  const content = document.querySelector(".content");
+  function toggleSidebar() {
+      if (sidebar.style.left === "0px") {
+          sidebar.style.left = "-250px";
+          content.style.marginLeft = "0";
+      } else {
+          sidebar.style.left = "0";
+          content.style.marginLeft = "250px";
+      }
+  }
+  
+  window.addEventListener('resize', function() {
+    if (window.innerWidth < 600) return;
+
+    sidebar.style.left = "-250px";
+    content.style.marginLeft = "0";
+  });
+
+
+</script>
+
+</body>
+</html>
